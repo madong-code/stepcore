@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    server_name stepcore.demo;
+
+    # 文档根指向 stepcore 包根，使 /ui/ 作为真实静态文件直接托管
+    root /var/www/packages/stepcore;
+    index demo/public/index.php;
+
+    # 静态资源（含 /ui/* 设计器）由 nginx 直接返回
+    location / {
+        try_files $uri $uri/ /demo/public/index.php$is_args$args;
+    }
+
+    # 仅把前端控制器交给 php-fpm
+    location ~ ^/demo/public/index\.php$ {
+        fastcgi_pass 127.0.0.1:9000;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root/demo/public/index.php;
+    }
+}

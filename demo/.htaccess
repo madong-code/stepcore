@@ -1,0 +1,8 @@
+# StepCore demo · apache 重写（php-fpm / mod_php）
+# 让 /ui/ 等真实文件由 Apache 直接托管，其余转发到前端控制器。
+DirectoryIndex demo/public/index.php
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ /demo/public/index.php [L]

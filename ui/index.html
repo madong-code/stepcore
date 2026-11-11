@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StepCore 流程设计器</title>
+    <link rel="stylesheet" href="vendor/logic-flow.css">
+    <link rel="stylesheet" href="css/designer.css">
+</head>
+<body>
+    <div id="app">
+        <div class="toolbar">
+            <button id="btn-toggle-left" class="btn toggle-panel" title="切换节点面板">面板</button>
+            <span class="brand">StepCore <b>Designer</b></span>
+            <span class="spacer"></span>
+            <button id="btn-toggle-right" class="btn toggle-panel" title="切换属性面板">属性</button>
+            <input id="file-input" type="file" accept="application/json,.json" hidden>
+        </div>
+
+        <div class="workspace" id="workspace">
+            <aside class="palette" id="palette"></aside>
+
+            <div class="canvas-wrap">
+                <div id="lf"></div>
+                <div id="load-error" class="load-error hidden">
+                    LogicFlow 本地资源加载失败，请检查 ui/vendor/ 是否完整。
+                </div>
+                <!-- 画布操作面板（LogicFlow Control 风格，对齐 MES 设计器） -->
+                <div id="canvas-ops" class="lf-control"></div>
+                <div class="canvas-hint">拖出节点锚点连线 · 点击元素编辑属性 · 选中后按 Delete 删除</div>
+            </div>
+
+            <aside class="inspector" id="inspector">
+                <div class="empty">未选择节点 / 连线<br><span class="hint">点击画布中的节点或连线进行编辑</span></div>
+            </aside>
+        </div>
+
+        <div class="statusbar" id="statusbar">
+            <span class="stat">节点 <b id="stat-nodes">0</b></span>
+            <span class="stat">连线 <b id="stat-edges">0</b></span>
+            <span class="divider hint-desktop"></span>
+            <span class="hint-desktop">拖出锚点连线，选中元素后在右侧编辑属性</span>
+            <span class="spacer"></span>
+            <span id="stat-sel" class="sel-badge none">空闲</span>
+        </div>
+    </div>
+
+    <div id="mode-popup" class="popup hidden"></div>
+    <div id="ctx-menu" class="node-ctx-menu hidden"></div>
+    <div id="toast-host" class="toast-host"></div>
+
+    <!-- 导出 JSON 抽屉（右侧滑出，遮罩点击关闭） -->
+    <div id="export-drawer-mask" class="drawer-mask"></div>
+    <aside id="export-drawer" class="drawer" aria-hidden="true">
+        <div class="drawer-header">
+            <span class="drawer-title">导出 JSON（route-v2）</span>
+            <button id="btn-export-close" class="drawer-close" title="关闭">✕</button>
+        </div>
+        <pre id="export-json" class="drawer-body"></pre>
+        <div class="drawer-footer">
+            <button id="btn-export-copy" class="btn-drawer">复制</button>
+            <button id="btn-export-download" class="btn-drawer primary">下载 JSON</button>
+        </div>
+    </aside>
+
+    <script src="vendor/logic-flow.min.js"></script>
+    <script>
+        if (typeof LogicFlow === 'undefined') {
+            document.getElementById('load-error').textContent = 'LogicFlow 本地资源加载失败，请检查 ui/vendor/ 是否完整。';
+            document.getElementById('load-error').classList.remove('hidden');
+        }
+    </script>
+    <script src="js/model.js"></script>
+    <script src="js/nodes.js"></script>
+    <script src="js/inspector.js"></script>
+    <script src="js/toolbar.js"></script>
+    <script src="js/panel.js"></script>
+    <script src="js/io.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Composer (libraries usually do not commit these)
+/vendor/
+composer.lock
+
+# Local runtime / build output
+.phpunit.result.cache
+build/
+dist/
+*.log

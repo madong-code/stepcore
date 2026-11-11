@@ -1,0 +1,23 @@
+{
+    "name": "madong/stepcore",
+    "description": "StepCore 工序执行内核（通用流程引擎包：RouteGraph/TransitionResolver/GuardChain/StateMachine）",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "madong\\stepcore\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "madong\\stepcore\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev"
+}
